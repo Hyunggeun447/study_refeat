@@ -28,5 +28,5 @@ public class ChatRoom {
   private Long id;
 
   @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<Chat> chats = new ArrayList<>();
+  private List<ChatMessage> chatMessages = new ArrayList<>();
 }
