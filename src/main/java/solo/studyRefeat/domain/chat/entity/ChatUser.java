@@ -49,7 +49,7 @@ public class ChatUser {
   }
 
   public void addUser(User user) {
-    Assert.notNull(user,"user must be provided");
+    Assert.notNull(user, "user must be provided");
 
     if (!Objects.isNull(this.user)) {
       this.user.getChatUsers().remove(this);
