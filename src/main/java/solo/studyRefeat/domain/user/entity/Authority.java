@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
-@Entity가
+@Entity
 @Table(name = "authority")
 @Getter
 @Builder
