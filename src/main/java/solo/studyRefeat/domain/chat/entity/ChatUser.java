@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.springframework.util.Assert;
+import solo.studyRefeat.domain.common.entity.BaseTime;
 import solo.studyRefeat.domain.user.entity.User;
 
 @Entity
@@ -23,7 +24,7 @@ import solo.studyRefeat.domain.user.entity.User;
 @SQLDelete(sql = "UPDATE chat_user SET is_deleted = true WHERE id = ?")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ChatUser {
+public class ChatUser extends BaseTime {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)

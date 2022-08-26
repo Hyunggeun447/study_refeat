@@ -14,13 +14,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import solo.studyRefeat.domain.common.entity.BaseTime;
 
 @Entity
 @Table(name = "authority")
 @Getter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Authority implements GrantedAuthority {
+public class Authority extends BaseTime implements GrantedAuthority {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

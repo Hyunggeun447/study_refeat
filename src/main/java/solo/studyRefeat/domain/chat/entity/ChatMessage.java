@@ -17,6 +17,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.util.Assert;
+import solo.studyRefeat.domain.common.entity.BaseTime;
 import solo.studyRefeat.domain.user.entity.User;
 
 @Entity
@@ -25,7 +26,7 @@ import solo.studyRefeat.domain.user.entity.User;
 @SQLDelete(sql = "UPDATE chat SET is_deleted = true WHERE id = ?")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ChatMessage {
+public class ChatMessage extends BaseTime {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)

@@ -20,6 +20,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import solo.studyRefeat.domain.chat.entity.ChatMessage;
 import solo.studyRefeat.domain.chat.entity.ChatUser;
+import solo.studyRefeat.domain.common.entity.BaseTime;
 
 @Entity
 @Table(name = "users")
@@ -27,7 +28,7 @@ import solo.studyRefeat.domain.chat.entity.ChatUser;
 @SQLDelete(sql = "UPDATE users SET is_deleted = true WHERE id = ?")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+public class User extends BaseTime {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)

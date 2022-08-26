@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import solo.studyRefeat.domain.common.entity.BaseTime;
 
 @Entity
 @Table(name = "chat_room")
@@ -21,7 +22,7 @@ import org.hibernate.annotations.Where;
 @SQLDelete(sql = "UPDATE chat_room SET is_deleted = true WHERE id = ?")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ChatRoom {
+public class ChatRoom extends BaseTime {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
