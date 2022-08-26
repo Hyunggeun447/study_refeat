@@ -18,6 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import solo.studyRefeat.domain.chat.entity.ChatMessage;
 import solo.studyRefeat.domain.chat.entity.ChatUser;
 
 @Entity
@@ -55,8 +56,14 @@ public class User {
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<ChatUser> chatUsers = new ArrayList<>();
 
+  @OneToMany(mappedBy = "sender")
+  private List<ChatMessage> chatMessages = new ArrayList<>();
+
   public void addChatUSer(ChatUser chatUser) {
     this.chatUsers.add(chatUser);
   }
 
+  public void addChatMessage(ChatMessage chatMessage) {
+    this.chatMessages.add(chatMessage);
+  }
 }
