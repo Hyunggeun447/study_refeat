@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,7 @@ import solo.studyRefeat.domain.common.entity.BaseTime;
 @Getter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Authority extends BaseTime implements GrantedAuthority {
 
   @Id
@@ -34,6 +36,10 @@ public class Authority extends BaseTime implements GrantedAuthority {
 
   @Column(name = "role")
   private String role;
+
+  @Column(name = "is_deleted")
+  @Builder.Default
+  private Boolean isDeleted = Boolean.FALSE;
 
   public Authority(Long id, User user, String role) {
     this.id = id;
