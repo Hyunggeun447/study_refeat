@@ -53,4 +53,15 @@ public class ChatMessage {
     sender.addChatMessage(this);
     this.sender = sender;
   }
+
+  public void addChatRoom(ChatRoom chatRoom) {
+    Assert.notNull(chatRoom, "chatRoom must be provided");
+
+    if (!Objects.isNull(this.chatRoom)) {
+      this.chatRoom.getChatMessages().remove(this);
+    }
+
+    chatRoom.addChatMessage(this);
+    this.chatRoom = chatRoom;
+  }
 }

@@ -36,4 +36,8 @@ public class ChatRoom {
   public void addChatUser(ChatUser chatUser) {
     this.chatUsers.add(chatUser);
   }
+
+  public void addChatMessage(ChatMessage chatMessage) {
+    this.chatMessages.add(chatMessage);
+  }
 }
