@@ -1,6 +1,9 @@
 package solo.studyRefeat.domain.user.entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -8,12 +11,14 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import solo.studyRefeat.domain.chat.entity.ChatUser;
 
 @Entity
 @Table(name = "users")
@@ -46,5 +51,12 @@ public class User {
 
   @Column(name = "profile_url")
   private String profileUrl;
+
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<ChatUser> chatUsers = new ArrayList<>();
+
+  public void addChatUSer(ChatUser chatUser) {
+    this.chatUsers.add(chatUser);
+  }
 
 }

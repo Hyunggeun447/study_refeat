@@ -1,5 +1,6 @@
 package solo.studyRefeat.domain.chat.entity;
 
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import org.springframework.util.Assert;
 import solo.studyRefeat.domain.user.entity.User;
 
 @Entity
@@ -35,4 +37,25 @@ public class ChatUser {
   @JoinColumn(name = "user_id")
   private User user;
 
+  public void addChatRoom(ChatRoom chatRoom) {
+    Assert.notNull(chatRoom,"chatRoom must be provided");
+
+    if (!Objects.isNull(this.chatRoom)) {
+      this.chatRoom.getChatUsers().remove(this);
+    }
+
+    chatRoom.addChatUser(this);
+    this.chatRoom = chatRoom;
+  }
+
+  public void addUser(User user) {
+    Assert.notNull(user,"user must be provided");
+
+    if (!Objects.isNull(this.user)) {
+      this.user.getChatUsers().remove(this);
+    }
+
+    user.addChatUSer(this);
+    this.user = user;
+  }
 }
