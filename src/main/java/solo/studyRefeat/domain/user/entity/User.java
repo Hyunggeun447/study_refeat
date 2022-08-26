@@ -60,6 +60,9 @@ public class User extends BaseTime {
   @OneToMany(mappedBy = "sender")
   private List<ChatMessage> chatMessages = new ArrayList<>();
 
+  @Column(name = "is_deleted")
+  private Boolean isDeleted = Boolean.FALSE;
+
   public void addChatUSer(ChatUser chatUser) {
     this.chatUsers.add(chatUser);
   }

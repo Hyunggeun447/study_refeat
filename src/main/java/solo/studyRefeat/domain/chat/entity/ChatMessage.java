@@ -1,6 +1,7 @@
 package solo.studyRefeat.domain.chat.entity;
 
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -43,6 +44,9 @@ public class ChatMessage extends BaseTime {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "chatRoom_id")
   private ChatRoom chatRoom;
+
+  @Column(name = "is_deleted")
+  private Boolean isDeleted = Boolean.FALSE;
 
   public void addSender(User sender) {
     Assert.notNull(sender, "user must be provided");

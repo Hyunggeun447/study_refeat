@@ -3,6 +3,7 @@ package solo.studyRefeat.domain.chat.entity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,6 +34,9 @@ public class ChatRoom extends BaseTime {
 
   @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<ChatUser> chatUsers = new ArrayList<>();
+
+  @Column(name = "is_deleted")
+  private Boolean isDeleted = Boolean.FALSE;
 
   public void addChatUser(ChatUser chatUser) {
     this.chatUsers.add(chatUser);
