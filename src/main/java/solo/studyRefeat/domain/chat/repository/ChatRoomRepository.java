@@ -1,5 +1,8 @@
 package solo.studyRefeat.domain.chat.repository;
 
-public interface ChatRoomRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import solo.studyRefeat.domain.chat.entity.ChatRoom;
+
+public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
 
 }
