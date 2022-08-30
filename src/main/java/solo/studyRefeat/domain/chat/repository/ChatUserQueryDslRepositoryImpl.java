@@ -4,10 +4,8 @@ import static solo.studyRefeat.domain.chat.entity.QChatUser.chatUser;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import javax.persistence.EntityManager;
-import solo.studyRefeat.domain.chat.entity.ChatRoom;
 import solo.studyRefeat.domain.chat.entity.ChatUser;
 import solo.studyRefeat.domain.chat.entity.QChatUser;
-import solo.studyRefeat.domain.user.entity.User;
 
 public class ChatUserQueryDslRepositoryImpl implements ChatUserQueryDslRepository{
 
