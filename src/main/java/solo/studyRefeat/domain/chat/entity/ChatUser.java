@@ -58,8 +58,8 @@ public class ChatUser extends BaseTime {
     this.chatRoom = chatRoom;
   }
 
-  public void deleteChatRoom(ChatRoom chatRoom) {
-    chatRoom.deleteChatUser(this);
+  public void deleteChatRoom() {
+    this.chatRoom.deleteChatUser(this);
     this.chatRoom = null;
   }
 
@@ -74,8 +74,8 @@ public class ChatUser extends BaseTime {
     this.user = user;
   }
 
-  public void deleteUser(User user) {
-    user.deleteChatUser(this);
+  public void deleteUser() {
+    this.user.deleteChatUser(this);
     this.user = null;
   }
 }
