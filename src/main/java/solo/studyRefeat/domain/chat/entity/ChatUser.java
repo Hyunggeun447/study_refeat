@@ -58,6 +58,11 @@ public class ChatUser extends BaseTime {
     this.chatRoom = chatRoom;
   }
 
+  public void deleteChatRoom(ChatRoom chatRoom) {
+    chatRoom.deleteChatUser(this);
+    this.chatRoom = null;
+  }
+
   public void addUser(User user) {
     Assert.notNull(user, "user must be provided");
 
@@ -67,5 +72,10 @@ public class ChatUser extends BaseTime {
 
     user.addChatUSer(this);
     this.user = user;
+  }
+
+  public void deleteUser(User user) {
+    user.deleteChatUser(this);
+    this.user = null;
   }
 }

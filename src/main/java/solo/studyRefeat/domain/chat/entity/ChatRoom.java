@@ -56,6 +56,10 @@ public class ChatRoom extends BaseTime {
     this.chatUsers.add(chatUser);
   }
 
+  public void deleteChatUser(ChatUser chatUser) {
+    this.chatUsers.remove(chatUser);
+  }
+
   public void addChatMessage(ChatMessage chatMessage) {
     this.chatMessages.add(chatMessage);
   }
