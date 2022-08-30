@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import solo.studyRefeat.domain.chat.dto.AddChatUserRequest;
 import solo.studyRefeat.domain.chat.dto.CreateChatRoomRequest;
+import solo.studyRefeat.domain.chat.dto.DeleteChatUserRequest;
 import solo.studyRefeat.domain.chat.entity.ChatRoom;
 import solo.studyRefeat.domain.chat.entity.ChatUser;
 import solo.studyRefeat.domain.chat.repository.ChatRoomRepository;
@@ -46,5 +47,13 @@ public class ChatRoomService {
 
     chatUserRepository.save(new ChatUser(chatRoom, user));
     return chatRoom.getId();
+  }
+
+  @Transactional
+  public void deleteChatUser(DeleteChatUserRequest request) {
+    ChatUser chatUser = chatUserRepository.findChatUserByChatRoomAndUser(
+        request.getChatRoomId(), request.getUserId());
+
+    chatUser.deleteChatUser();
   }
 }

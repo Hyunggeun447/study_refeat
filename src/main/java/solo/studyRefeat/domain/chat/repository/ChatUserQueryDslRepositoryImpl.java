@@ -18,11 +18,11 @@ public class ChatUserQueryDslRepositoryImpl implements ChatUserQueryDslRepositor
   }
 
   @Override
-  public ChatUser findChatUser(ChatRoom chatRoom, User user) {
+  public ChatUser findChatUserByChatRoomAndUser(Long chatRoomId, Long userId) {
     return jpaQueryFactory.selectFrom(QChatUser.chatUser)
         .where(
-            QChatUser.chatUser.chatRoom.eq(chatRoom),
-            QChatUser.chatUser.user.eq(user)
+            chatUser.chatRoom.id.eq(chatRoomId),
+            chatUser.user.id.eq(userId)
         )
         .fetchOne();
   }
