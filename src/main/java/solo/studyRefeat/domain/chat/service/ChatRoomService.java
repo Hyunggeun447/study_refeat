@@ -1,17 +1,37 @@
 package solo.studyRefeat.domain.chat.service;
 
+import static solo.studyRefeat.domain.chat.util.ChatRoomConverter.*;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import solo.studyRefeat.domain.chat.dto.CreateChatRoomRequest;
+import solo.studyRefeat.domain.chat.entity.ChatRoom;
+import solo.studyRefeat.domain.chat.entity.ChatUser;
 import solo.studyRefeat.domain.chat.repository.ChatRoomRepository;
+import solo.studyRefeat.domain.chat.repository.ChatUserRepository;
+import solo.studyRefeat.domain.user.entity.User;
+import solo.studyRefeat.domain.user.repository.UserRepository;
 
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class ChatRoomService {
 
   private final ChatRoomRepository chatRoomRepository;
+  private final ChatUserRepository chatUserRepository;
+  private final UserRepository userRepository;
 
-  public ChatRoomService(
-      ChatRoomRepository chatRoomRepository) {
-    this.chatRoomRepository = chatRoomRepository;
+  @Transactional
+  public Long createChatRoom(CreateChatRoomRequest request) {
+    ChatRoom chatRoom = chatRoomRepository.save(toChatRoom(request));
+
+    request.getUserIds().forEach(userId ->
+        {
+          User user = userRepository.findById(userId).orElseThrow(RuntimeException::new);
+          chatUserRepository.save(new ChatUser(chatRoom, user));
+        }
+    );
+    return chatRoom.getId();
   }
 }

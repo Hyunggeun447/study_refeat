@@ -42,6 +42,11 @@ public class ChatUser extends BaseTime {
   @Column(name = "is_deleted")
   private Boolean isDeleted = Boolean.FALSE;
 
+  public ChatUser(ChatRoom chatRoom, User user) {
+    addChatRoom(chatRoom);
+    addUser(user);
+  }
+
   public void addChatRoom(ChatRoom chatRoom) {
     Assert.notNull(chatRoom,"chatRoom must be provided");
 

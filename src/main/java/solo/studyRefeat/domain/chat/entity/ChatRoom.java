@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
@@ -22,21 +24,33 @@ import solo.studyRefeat.domain.common.entity.BaseTime;
 @Where(clause = "is_deleted = false")
 @SQLDelete(sql = "UPDATE chat_room SET is_deleted = true WHERE id = ?")
 @Getter
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class ChatRoom extends BaseTime {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
+  @Column(name = "roomName")
+  private String roomName;
+
+  @Builder.Default
   @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<ChatMessage> chatMessages = new ArrayList<>();
 
+  @Builder.Default
   @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<ChatUser> chatUsers = new ArrayList<>();
 
+  @Builder.Default
   @Column(name = "is_deleted")
   private Boolean isDeleted = Boolean.FALSE;
+
+  public ChatRoom(String roomName) {
+    this.roomName = roomName;
+  }
 
   public void addChatUser(ChatUser chatUser) {
     this.chatUsers.add(chatUser);
