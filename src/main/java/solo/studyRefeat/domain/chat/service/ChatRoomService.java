@@ -2,6 +2,7 @@ package solo.studyRefeat.domain.chat.service;
 
 import static solo.studyRefeat.domain.chat.util.ChatRoomConverter.*;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,4 +57,12 @@ public class ChatRoomService {
 
     chatUser.deleteChatUser();
   }
+
+  public List<ChatRoom> findMyChatRoom(Long userId) {
+    return chatRoomRepository.findChatRoomByUserId(userId);
+  }
+
+//  public ChatRoom findChatRoom(Long chatRoomId) {
+//
+//  }
 }
