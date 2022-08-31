@@ -62,7 +62,12 @@ public class ChatRoomService {
     return chatRoomRepository.findChatRoomByUserId(userId);
   }
 
-//  public ChatRoom findChatRoom(Long chatRoomId) {
-//
-//  }
+  public List<ChatRoom> findChatRoomByRoomName(String roomName) {
+    return chatRoomRepository.findChatRoomByRoomName(roomName);
+  }
+
+  public ChatRoom findChatRoomById(Long chatRoomId) {
+    return chatRoomRepository.findById(chatRoomId)
+        .orElseThrow(RuntimeException::new);
+  }
 }
