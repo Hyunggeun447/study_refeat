@@ -6,9 +6,9 @@ import solo.studyRefeat.domain.chat.entity.ChatRoom;
 public class ChatRoomConverter {
 
   public static ChatRoom toChatRoom(CreateChatRoomRequest request) {
-    return new ChatRoom(
-        request.getRoomName()
-    );
+    return ChatRoom.builder()
+        .roomName(request.getRoomName())
+        .build();
   }
 
 }
