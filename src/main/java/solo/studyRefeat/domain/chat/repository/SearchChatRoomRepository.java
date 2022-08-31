@@ -7,4 +7,6 @@ public interface SearchChatRoomRepository {
 
   List<ChatRoom> findChatRoomByUserId(Long userId);
 
+  List<ChatRoom> findChatRoomByRoomName(String roomName);
+
 }
