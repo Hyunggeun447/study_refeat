@@ -1,12 +1,14 @@
 package solo.studyRefeat.domain.chat.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class DeleteChatUserRequest {
 
-  private Long ChatRoomId;
+  private Long chatRoomId;
 
-  private Long UserId;
+  private Long userId;
 
 }
