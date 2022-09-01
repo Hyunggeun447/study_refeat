@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
@@ -26,7 +28,9 @@ import solo.studyRefeat.domain.user.entity.User;
 @Where(clause = "is_deleted = false")
 @SQLDelete(sql = "UPDATE chat SET is_deleted = true WHERE id = ?")
 @Getter
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class ChatMessage extends BaseTime {
 
   @Id
@@ -45,6 +49,7 @@ public class ChatMessage extends BaseTime {
   @JoinColumn(name = "chatRoom_id")
   private ChatRoom chatRoom;
 
+  @Builder.Default
   @Column(name = "is_deleted")
   private Boolean isDeleted = Boolean.FALSE;
 
