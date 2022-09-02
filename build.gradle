@@ -51,6 +51,9 @@ dependencies {
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 	annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
 
+	//s3 설정
+	implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.4.1'
+
 }
 
 tasks.named('test') {
