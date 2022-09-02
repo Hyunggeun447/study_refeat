@@ -8,6 +8,7 @@ import solo.studyRefeat.domain.chat.entity.ChatMessage;
 import solo.studyRefeat.domain.chat.entity.ChatRoom;
 import solo.studyRefeat.domain.chat.repository.ChatMessageRepository;
 import solo.studyRefeat.domain.chat.repository.ChatRoomRepository;
+import solo.studyRefeat.domain.chat.util.ChatRoomConverter;
 import solo.studyRefeat.domain.user.entity.User;
 
 @Service
@@ -24,13 +25,8 @@ public class ChatMessageService {
     ChatRoom chatRoom = chatRoomRepository.findById(request.getChatRoomId())
         .orElseThrow(RuntimeException::new);
 
-    ChatMessage chatMessage = ChatMessage.builder()
-        .chatRoom(chatRoom)
-        .message(request.getMessage())
-        .sender(user)
-        .build();
+    ChatMessage chatMessage = ChatRoomConverter.toChatMessage(request, chatRoom, user);
 
     return chatMessageRepository.save(chatMessage).getId();
   }
-
 }
