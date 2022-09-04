@@ -30,7 +30,7 @@ public class ChatRoomController {
     return chatRoomId;
   }
 
-  @PostMapping
+  @PostMapping("/addUser")
   public Long addChatUser(AddChatUserRequest request,
       @CurrentUser User user) {
 
@@ -38,5 +38,7 @@ public class ChatRoomController {
     Long chatRoomId = chatRoomService.addChatUser(request);
     return chatRoomId;
   }
+
+
 
 }
