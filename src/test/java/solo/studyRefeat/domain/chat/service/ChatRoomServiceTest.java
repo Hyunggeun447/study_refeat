@@ -34,7 +34,10 @@ class ChatRoomServiceTest {
 
   @BeforeEach
   void setup() {
-    User user = userRepository.save(new User("nick"));
+    User user = userRepository.save(User.builder()
+        .nickname("nick")
+        .password("pass")
+        .build());
     userId = user.getId();
     List<Long> userIds = new ArrayList<>();
     userIds.add(userId);
