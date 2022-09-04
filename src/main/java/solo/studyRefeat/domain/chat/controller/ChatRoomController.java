@@ -10,6 +10,7 @@ import solo.studyRefeat.domain.chat.dto.CreateChatRoomRequest;
 import solo.studyRefeat.domain.chat.service.ChatRoomService;
 import solo.studyRefeat.domain.user.aop.annotation.CurrentUser;
 import solo.studyRefeat.domain.user.entity.User;
+import solo.studyRefeat.domain.user.service.UserService;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,11 +18,13 @@ import solo.studyRefeat.domain.user.entity.User;
 public class ChatRoomController {
 
   private final ChatRoomService chatRoomService;
+  private final UserService userService;
 
   @PostMapping
   public Long createChatRoom(CreateChatRoomRequest request,
       @CurrentUser User user) {
 
+    userService.checkUser(user);
     Long chatRoomId = chatRoomService.createChatRoom(request);
 
     return chatRoomId;
@@ -30,7 +33,10 @@ public class ChatRoomController {
   @PostMapping
   public Long addChatUser(AddChatUserRequest request,
       @CurrentUser User user) {
-    chatRoomService.addChatUser(request);
+
+    userService.checkUser(user);
+    Long chatRoomId = chatRoomService.addChatUser(request);
+    return chatRoomId;
   }
 
 }
