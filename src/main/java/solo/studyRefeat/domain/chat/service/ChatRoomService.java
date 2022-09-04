@@ -26,13 +26,14 @@ public class ChatRoomService {
   private final UserRepository userRepository;
 
   @Transactional
-  public Long createChatRoom(CreateChatRoomRequest request) {
+  public Long createChatRoom(CreateChatRoomRequest request, User user) {
     ChatRoom chatRoom = chatRoomRepository.save(toChatRoom(request));
 
+    request.getUserIds().add(user.getId());
     request.getUserIds().forEach(userId ->
         {
-          User user = userRepository.findById(userId).orElseThrow(RuntimeException::new);
-          chatUserRepository.save(new ChatUser(chatRoom, user));
+          User chatUser = userRepository.findById(userId).orElseThrow(RuntimeException::new);
+          chatUserRepository.save(new ChatUser(chatRoom, chatUser));
         }
     );
     return chatRoom.getId();
