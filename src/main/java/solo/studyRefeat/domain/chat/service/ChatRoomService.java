@@ -46,6 +46,10 @@ public class ChatRoomService {
     User user = userRepository.findById(request.getUserId())
         .orElseThrow(RuntimeException::new);
 
+    if (chatRoom.getChatUsers().contains(user)) {
+      throw new RuntimeException("이미 존재하는 유저");
+    }
+
     chatUserRepository.save(new ChatUser(chatRoom, user));
     return chatRoom.getId();
   }
