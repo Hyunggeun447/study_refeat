@@ -3,6 +3,7 @@ package solo.studyRefeat.domain.chat.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import solo.studyRefeat.domain.chat.dto.AddChatUserRequest;
@@ -30,7 +31,7 @@ public class ChatRoomController {
     return chatRoomId;
   }
 
-  @PostMapping("/addUser")
+  @PutMapping("/addUser")
   public Long addChatUser(AddChatUserRequest request,
       @CurrentUser User user) {
 
