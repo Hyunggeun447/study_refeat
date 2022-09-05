@@ -55,9 +55,12 @@ public class ChatRoomService {
   }
 
   @Transactional
-  public void deleteChatUser(DeleteChatUserRequest request) {
+  public void deleteChatUser(DeleteChatUserRequest request, User user) {
     ChatUser chatUser = chatUserRepository.findChatUserByChatRoomAndUser(
         request.getChatRoomId(), request.getUserId());
+
+    ChatRoom chatRoom = chatUser.getChatRoom();
+    chatRoom.validateHost(user);
 
     chatUser.deleteChatUser();
   }

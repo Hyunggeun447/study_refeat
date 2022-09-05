@@ -1,13 +1,14 @@
 package solo.studyRefeat.domain.chat.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import solo.studyRefeat.domain.chat.dto.AddChatUserRequest;
 import solo.studyRefeat.domain.chat.dto.CreateChatRoomRequest;
+import solo.studyRefeat.domain.chat.dto.DeleteChatUserRequest;
 import solo.studyRefeat.domain.chat.service.ChatRoomService;
 import solo.studyRefeat.domain.user.aop.annotation.CurrentUser;
 import solo.studyRefeat.domain.user.entity.User;
@@ -40,6 +41,10 @@ public class ChatRoomController {
     return chatRoomId;
   }
 
-
-
+  @DeleteMapping
+  public void deleteUser(DeleteChatUserRequest request,
+      @CurrentUser User user) {
+    userService.checkUser(user);
+    chatRoomService.deleteChatUser(request, user);
+  }
 }

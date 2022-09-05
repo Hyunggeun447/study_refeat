@@ -32,9 +32,10 @@ class ChatRoomServiceTest {
   @Autowired
   ChatRoomRepository chatRoomRepository;
 
+  User user;
   @BeforeEach
   void setup() {
-    User user = userRepository.save(User.builder()
+    user = userRepository.save(User.builder()
         .nickname("nick")
         .password("pass")
         .build());
@@ -67,7 +68,7 @@ class ChatRoomServiceTest {
         .chatRoomId(chatRoomId)
         .userId(userId)
         .build();
-    chatRoomService.deleteChatUser(request);
+    chatRoomService.deleteChatUser(request, user);
 
     ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId).orElseThrow(RuntimeException::new);
 
