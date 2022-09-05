@@ -26,7 +26,7 @@ public class ChatRoomController {
       @CurrentUser User user) {
 
     userService.checkUser(user);
-    Long chatRoomId = chatRoomService.createChatRoom(request);
+    Long chatRoomId = chatRoomService.createChatRoom(request, user);
 
     return chatRoomId;
   }

@@ -26,8 +26,8 @@ public class ChatRoomService {
   private final UserRepository userRepository;
 
   @Transactional
-  public Long createChatRoom(CreateChatRoomRequest request) {
-    ChatRoom chatRoom = chatRoomRepository.save(toChatRoom(request));
+  public Long createChatRoom(CreateChatRoomRequest request, User user) {
+    ChatRoom chatRoom = chatRoomRepository.save(toChatRoom(request, user));
 
     request.getUserIds().forEach(userId ->
         {

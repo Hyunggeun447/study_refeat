@@ -45,7 +45,7 @@ class ChatRoomServiceTest {
         .roomName("roomName")
         .userIds(userIds)
         .build();
-    chatRoomId = chatRoomService.createChatRoom(request);
+    chatRoomId = chatRoomService.createChatRoom(request, user);
 
     ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId).orElseThrow(RuntimeException::new);
 

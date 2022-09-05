@@ -5,9 +5,11 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AccessLevel;
@@ -18,6 +20,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import solo.studyRefeat.domain.common.entity.BaseTime;
+import solo.studyRefeat.domain.user.entity.User;
 
 @Entity
 @Table(name = "chat_room")
@@ -43,6 +46,8 @@ public class ChatRoom extends BaseTime {
   @Builder.Default
   @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<ChatUser> chatUsers = new ArrayList<>();
+
+  private Long hostId;
 
   @Builder.Default
   @Column(name = "is_deleted")

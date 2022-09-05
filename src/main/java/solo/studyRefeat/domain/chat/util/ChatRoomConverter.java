@@ -8,9 +8,10 @@ import solo.studyRefeat.domain.user.entity.User;
 
 public class ChatRoomConverter {
 
-  public static ChatRoom toChatRoom(CreateChatRoomRequest request) {
+  public static ChatRoom toChatRoom(CreateChatRoomRequest request, User user) {
     return ChatRoom.builder()
         .roomName(request.getRoomName())
+        .hostId(user.getId())
         .build();
   }
 
