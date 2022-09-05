@@ -68,4 +68,10 @@ public class ChatRoom extends BaseTime {
   public void addChatMessage(ChatMessage chatMessage) {
     this.chatMessages.add(chatMessage);
   }
+
+  public void validateHost(User user) {
+    if (!this.hostId.equals(user.getId())) {
+      throw new RuntimeException("권한이 없습니다.");
+    }
+  }
 }
