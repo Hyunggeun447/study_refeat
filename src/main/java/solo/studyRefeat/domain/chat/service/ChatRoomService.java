@@ -73,8 +73,13 @@ public class ChatRoomService {
     return chatRoomRepository.findChatRoomByRoomName(roomName);
   }
 
+  public List<ChatRoom> findAll() {
+    return chatRoomRepository.findAll();
+  }
+
   public ChatRoom findChatRoomById(Long chatRoomId) {
     return chatRoomRepository.findById(chatRoomId)
         .orElseThrow(RuntimeException::new);
   }
+
 }

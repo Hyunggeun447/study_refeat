@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import solo.studyRefeat.domain.chat.dto.AddChatUserRequest;
@@ -23,7 +24,8 @@ public class ChatRoomController {
   private final UserService userService;
 
   @PostMapping
-  public Long createChatRoom(CreateChatRoomRequest request,
+  public Long createChatRoom(
+      @RequestBody CreateChatRoomRequest request,
       @CurrentUser User user) {
 
     userService.checkUser(user);
@@ -33,7 +35,8 @@ public class ChatRoomController {
   }
 
   @PutMapping("/addUser")
-  public Long addChatUser(AddChatUserRequest request,
+  public Long addChatUser(
+      @RequestBody AddChatUserRequest request,
       @CurrentUser User user) {
 
     userService.checkUser(user);
@@ -42,7 +45,8 @@ public class ChatRoomController {
   }
 
   @DeleteMapping
-  public void deleteUser(DeleteChatUserRequest request,
+  public void deleteUser(
+      @RequestBody DeleteChatUserRequest request,
       @CurrentUser User user) {
     userService.checkUser(user);
     chatRoomService.deleteChatUser(request, user);
