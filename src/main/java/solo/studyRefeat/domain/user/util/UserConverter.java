@@ -11,6 +11,7 @@ import solo.studyRefeat.domain.user.dto.UserCounts;
 import solo.studyRefeat.domain.user.dto.UserDetailResponse;
 import solo.studyRefeat.domain.user.dto.UserLikeResponse;
 import solo.studyRefeat.domain.user.entity.Authority;
+import solo.studyRefeat.domain.user.entity.Password;
 import solo.studyRefeat.domain.user.entity.User;
 
 public class UserConverter {
@@ -18,7 +19,7 @@ public class UserConverter {
   public static User toUser(SignUpRequest signUpRequest) {
     User user = User.builder()
         .email(signUpRequest.getEmail())
-        .password(signUpRequest.getPassword())
+        .password(new Password(signUpRequest.getPassword()))
         .nickname(signUpRequest.getNickname())
         .birth(LocalDate.parse(signUpRequest.getBirth()))
         .gender(signUpRequest.getGender())
@@ -30,7 +31,7 @@ public class UserConverter {
   public static User toAdmin(SignUpRequest signUpRequest) {
     User user = User.builder()
         .email(signUpRequest.getEmail())
-        .password(signUpRequest.getPassword())
+        .password(new Password(signUpRequest.getPassword()))
         .nickname(signUpRequest.getNickname())
         .birth(LocalDate.parse(signUpRequest.getBirth()))
         .gender(signUpRequest.getGender())

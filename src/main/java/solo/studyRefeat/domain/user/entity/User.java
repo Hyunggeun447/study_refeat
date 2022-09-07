@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -46,8 +47,9 @@ public class User extends BaseTime {
   @Column(name = "email")
   private String email;
 
+  @Embedded
   @Column(name = "password")
-  private String password;
+  private Password password;
 
   @Column(name = "nickname")
   private String nickname;

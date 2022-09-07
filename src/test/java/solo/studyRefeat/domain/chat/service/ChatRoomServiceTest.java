@@ -16,6 +16,7 @@ import solo.studyRefeat.domain.chat.dto.DeleteChatUserRequest;
 import solo.studyRefeat.domain.chat.entity.ChatRoom;
 import solo.studyRefeat.domain.chat.entity.ChatUser;
 import solo.studyRefeat.domain.chat.repository.ChatRoomRepository;
+import solo.studyRefeat.domain.user.entity.Password;
 import solo.studyRefeat.domain.user.entity.User;
 import solo.studyRefeat.domain.user.repository.UserRepository;
 
@@ -37,7 +38,7 @@ class ChatRoomServiceTest {
   void setup() {
     user = userRepository.save(User.builder()
         .nickname("nick")
-        .password("pass")
+        .password(new Password("pass"))
         .build());
     userId = user.getId();
     List<Long> userIds = new ArrayList<>();
