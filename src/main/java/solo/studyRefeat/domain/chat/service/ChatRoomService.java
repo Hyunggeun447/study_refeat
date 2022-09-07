@@ -3,6 +3,7 @@ package solo.studyRefeat.domain.chat.service;
 import static solo.studyRefeat.domain.chat.util.ChatRoomConverter.*;
 
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,7 +70,7 @@ public class ChatRoomService {
     return chatRoomRepository.findChatRoomByUserId(userId);
   }
 
-  public List<ChatRoom> findChatRoomByRoomName(String roomName) {
+  public List<ChatRoom> findChatRoomByRoomName(Optional<String> roomName) {
     return chatRoomRepository.findChatRoomByRoomName(roomName);
   }
 
