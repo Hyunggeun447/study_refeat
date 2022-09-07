@@ -18,6 +18,7 @@ import solo.studyRefeat.domain.chat.entity.ChatUser;
 import solo.studyRefeat.domain.chat.repository.ChatRoomRepository;
 import solo.studyRefeat.domain.user.entity.Password;
 import solo.studyRefeat.domain.user.entity.User;
+import solo.studyRefeat.domain.user.entity.UserInfo;
 import solo.studyRefeat.domain.user.repository.UserRepository;
 
 @SpringBootTest
@@ -37,7 +38,10 @@ class ChatRoomServiceTest {
   @BeforeEach
   void setup() {
     user = userRepository.save(User.builder()
-        .nickname("nick")
+            .userInfo(UserInfo.builder()
+                .nickname("nick")
+                .profileUrl("root")
+                .build())
         .password(new Password("pass"))
         .build());
     userId = user.getId();
@@ -52,7 +56,7 @@ class ChatRoomServiceTest {
     ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId).orElseThrow(RuntimeException::new);
 
     ChatUser chatUser = chatRoom.getChatUsers().get(0);
-    String nickname = chatUser.getUser().getNickname();
+    String nickname = chatUser.getUser().getUserInfo().getNickname();
     System.out.println("nickname = " + nickname);
   }
 

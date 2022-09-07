@@ -1,6 +1,5 @@
 package solo.studyRefeat.domain.user.entity;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -43,17 +42,14 @@ public class User extends BaseTime {
   private Long id;
 
   @Embedded
-  private InfoNonChanged infoNonChanged;
-
-  @Embedded
   @Column(name = "password")
   private Password password;
 
-  @Column(name = "nickname")
-  private String nickname;
+  @Embedded
+  private InfoNonChanged infoNonChanged;
 
-  @Column(name = "profile_url")
-  private String profileUrl;
+  @Embedded
+  private UserInfo userInfo;
 
   @Builder.Default
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
