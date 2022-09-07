@@ -6,8 +6,8 @@ import static solo.studyRefeat.domain.user.entity.QUser.*;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.EntityManager;
-import org.springframework.util.ObjectUtils;
 import solo.studyRefeat.domain.chat.entity.ChatRoom;
 
 public class SearchChatRoomRepositoryImpl implements SearchChatRoomRepository{
@@ -27,20 +27,21 @@ public class SearchChatRoomRepositoryImpl implements SearchChatRoomRepository{
   }
 
   @Override
-  public List<ChatRoom> findChatRoomByRoomName(String roomName) {
+  public List<ChatRoom> findChatRoomByRoomName(Optional<String> roomName) {
     return jpaQueryFactory.selectFrom(chatRoom)
         .where(keywordListContains(roomName))
         .fetch();
   }
 
-  private BooleanBuilder keywordListContains(String keyword) {
-    if (ObjectUtils.isEmpty(keyword)) {
+  private BooleanBuilder keywordListContains(Optional<String> keyword) {
+
+    if (keyword.isEmpty()) {
       return null;
     }
     BooleanBuilder builder = new BooleanBuilder();
-    String[] splitedKeyword = keyword.split(" ");
+    String[] splitedKeyword = keyword.get().split(" ");
     for (String value : splitedKeyword) {
-      builder.and(chatRoom.roomName.contains(value));
+      builder.and(chatRoom.roomName.containsIgnoreCase(value));
     }
     return builder;
   }
