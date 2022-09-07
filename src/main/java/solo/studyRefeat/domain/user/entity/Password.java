@@ -6,6 +6,7 @@ import javax.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.util.Assert;
 
 @Getter
 @Embeddable
@@ -15,6 +16,7 @@ public class Password {
   private String password;
 
   public Password(String password) {
+    Assert.notNull(password, "password should not be empty");
     this.password = password;
   }
 
