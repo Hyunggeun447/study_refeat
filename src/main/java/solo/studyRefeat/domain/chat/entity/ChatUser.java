@@ -83,4 +83,10 @@ public class ChatUser extends BaseTime {
     this.user.deleteChatUser(this);
     this.user = null;
   }
+
+  public void checkExistUser(User user) {
+    if (this.user.equals(user)) {
+      throw new RuntimeException("이미 존재하는 유저");
+    }
+  }
 }

@@ -32,7 +32,8 @@ public class ChatRoomService {
 
     request.getUserIds().forEach(userId ->
         {
-          User chatUser = userRepository.findById(userId).orElseThrow(RuntimeException::new);
+          User chatUser = userRepository.findById(userId)
+              .orElseThrow(RuntimeException::new);
           chatUserRepository.save(new ChatUser(chatRoom, chatUser));
         }
     );
@@ -47,9 +48,7 @@ public class ChatRoomService {
     User user = userRepository.findById(request.getUserId())
         .orElseThrow(RuntimeException::new);
 
-    if (chatRoom.getChatUsers().contains(user)) {
-      throw new RuntimeException("이미 존재하는 유저");
-    }
+    chatRoom.getChatUsers().forEach(chatUser -> chatUser.checkExistUser(user));
 
     chatUserRepository.save(new ChatUser(chatRoom, user));
     return chatRoom.getId();
@@ -58,7 +57,9 @@ public class ChatRoomService {
   @Transactional
   public void deleteChatUser(DeleteChatUserRequest request, User user) {
     ChatUser chatUser = chatUserRepository.findChatUserByChatRoomAndUser(
-        request.getChatRoomId(), request.getUserId());
+            request.getChatRoomId(),
+            request.getUserId()
+        );
 
     ChatRoom chatRoom = chatUser.getChatRoom();
     chatRoom.validateHost(user);
