@@ -11,6 +11,7 @@ import solo.studyRefeat.domain.user.dto.UserCounts;
 import solo.studyRefeat.domain.user.dto.UserDetailResponse;
 import solo.studyRefeat.domain.user.dto.UserLikeResponse;
 import solo.studyRefeat.domain.user.entity.Authority;
+import solo.studyRefeat.domain.user.entity.InfoNonChanged;
 import solo.studyRefeat.domain.user.entity.Password;
 import solo.studyRefeat.domain.user.entity.User;
 
@@ -18,11 +19,13 @@ public class UserConverter {
 
   public static User toUser(SignUpRequest signUpRequest) {
     User user = User.builder()
-        .email(signUpRequest.getEmail())
+        .infoNonChanged(InfoNonChanged.builder()
+            .email(signUpRequest.getEmail())
+            .gender(signUpRequest.getGender())
+            .birth(LocalDate.parse(signUpRequest.getBirth()))
+            .build())
         .password(new Password(signUpRequest.getPassword()))
         .nickname(signUpRequest.getNickname())
-        .birth(LocalDate.parse(signUpRequest.getBirth()))
-        .gender(signUpRequest.getGender())
         .build();
     user.addAuthority(Authority.ofUser(user));
     return user;
@@ -30,11 +33,13 @@ public class UserConverter {
 
   public static User toAdmin(SignUpRequest signUpRequest) {
     User user = User.builder()
-        .email(signUpRequest.getEmail())
+        .infoNonChanged(InfoNonChanged.builder()
+            .email(signUpRequest.getEmail())
+            .gender(signUpRequest.getGender())
+            .birth(LocalDate.parse(signUpRequest.getBirth()))
+            .build())
         .password(new Password(signUpRequest.getPassword()))
         .nickname(signUpRequest.getNickname())
-        .birth(LocalDate.parse(signUpRequest.getBirth()))
-        .gender(signUpRequest.getGender())
         .build();
     user.addAuthority(Authority.ofAdmin(user));
     return user;
@@ -51,11 +56,11 @@ public class UserConverter {
 
     UserDetailResponse userDetail = UserDetailResponse.builder()
         .id(user.getId())
-        .email(user.getEmail())
+        .email(user.getInfoNonChanged().getEmail())
         .nickname(user.getNickname())
         .profileImage(profileUrl)
-        .birth(fromLocalDate(user.getBirth()))
-        .gender(user.getGender())
+        .birth(fromLocalDate(user.getInfoNonChanged().getBirth()))
+        .gender(user.getInfoNonChanged().getGender())
         .createdAt(fromLocalDateTime(user.getCreatedAt()))
         .updatedAt(fromLocalDateTime(user.getUpdatedAt()))
         .build();
@@ -83,11 +88,11 @@ public class UserConverter {
 
     OtherUserDetailResponse otherUserDetail = OtherUserDetailResponse.builder()
         .id(user.getId())
-        .email(user.getEmail())
+        .email(user.getInfoNonChanged().getEmail())
         .nickname(user.getNickname())
         .profileImage(profileUrl)
-        .birth(fromLocalDate(user.getBirth()))
-        .gender(user.getGender())
+        .birth(fromLocalDate(user.getInfoNonChanged().getBirth()))
+        .gender(user.getInfoNonChanged().getGender())
         .createdAt(fromLocalDateTime(user.getCreatedAt()))
         .build();
 

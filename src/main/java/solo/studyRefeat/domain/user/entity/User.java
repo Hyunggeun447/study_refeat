@@ -11,8 +11,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,8 +42,8 @@ public class User extends BaseTime {
   @Column(name = "id")
   private Long id;
 
-  @Column(name = "email")
-  private String email;
+  @Embedded
+  private InfoNonChanged infoNonChanged;
 
   @Embedded
   @Column(name = "password")
@@ -53,13 +51,6 @@ public class User extends BaseTime {
 
   @Column(name = "nickname")
   private String nickname;
-
-  @Column(name = "birth")
-  private LocalDate birth;
-
-  @Enumerated(EnumType.STRING)
-  @Column(name = "gender")
-  private Gender gender;
 
   @Column(name = "profile_url")
   private String profileUrl;
