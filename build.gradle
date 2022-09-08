@@ -54,6 +54,9 @@ dependencies {
 	//s3 설정
 	implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.4.1'
 
+	// 웹소켓
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
 }
 
 tasks.named('test') {
