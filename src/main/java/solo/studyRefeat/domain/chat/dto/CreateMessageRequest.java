@@ -9,6 +9,4 @@ public class CreateMessageRequest {
 
   private String message;
 
-  private Long chatRoomId;
-
 }

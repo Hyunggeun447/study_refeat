@@ -20,13 +20,16 @@ public class ChatMessageService {
   private final ChatRoomRepository chatRoomRepository;
 
   @Transactional
-  public Long createMessage(CreateMessageRequest request, User user) {
+  public ChatMessage createMessage(
+      Long roomId,
+      CreateMessageRequest request,
+      User user) {
 
-    ChatRoom chatRoom = chatRoomRepository.findById(request.getChatRoomId())
+    ChatRoom chatRoom = chatRoomRepository.findById(roomId)
         .orElseThrow(RuntimeException::new);
 
     ChatMessage chatMessage = ChatRoomConverter.toChatMessage(request, chatRoom, user);
 
-    return chatMessageRepository.save(chatMessage).getId();
+    return chatMessageRepository.save(chatMessage);
   }
 }
