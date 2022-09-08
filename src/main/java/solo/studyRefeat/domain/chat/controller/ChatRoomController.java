@@ -28,8 +28,8 @@ public class ChatRoomController {
       @RequestBody CreateChatRoomRequest request,
       @CurrentUser User user) {
 
-    userService.checkUser(user);
-    Long chatRoomId = chatRoomService.createChatRoom(request, user);
+    User checkedUser = userService.checkUser(user);
+    Long chatRoomId = chatRoomService.createChatRoom(request, checkedUser);
 
     return chatRoomId;
   }
@@ -48,7 +48,7 @@ public class ChatRoomController {
   public void deleteUser(
       @RequestBody DeleteChatUserRequest request,
       @CurrentUser User user) {
-    userService.checkUser(user);
-    chatRoomService.deleteChatUser(request, user);
+    User checkedUser = userService.checkUser(user);
+    chatRoomService.deleteChatUser(request, checkedUser);
   }
 }
