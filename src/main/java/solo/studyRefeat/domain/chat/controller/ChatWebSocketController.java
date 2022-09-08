@@ -6,7 +6,7 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 import solo.studyRefeat.domain.chat.dto.CreateMessageRequest;
 import solo.studyRefeat.domain.chat.entity.ChatMessage;
 import solo.studyRefeat.domain.chat.service.ChatMessageService;
@@ -15,7 +15,7 @@ import solo.studyRefeat.domain.user.entity.User;
 import solo.studyRefeat.domain.user.service.UserService;
 
 @Slf4j
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class ChatWebSocketController {
 
