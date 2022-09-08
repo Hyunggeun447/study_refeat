@@ -48,16 +48,20 @@ public class Authority extends BaseTime implements GrantedAuthority {
   }
 
   public static Authority ofUser(User user) {
-    return Authority.builder()
+    Authority role_user = Authority.builder()
         .role("ROLE_USER")
         .user(user)
         .build();
+    user.addAuthority(role_user);
+    return role_user;
   }
 
   public static Authority ofAdmin(User user) {
-    return Authority.builder()
+    Authority role_admin = Authority.builder()
         .role("ROLE_ADMIN")
         .user(user)
         .build();
+    user.addAuthority(role_admin);
+    return role_admin;
   }
 }

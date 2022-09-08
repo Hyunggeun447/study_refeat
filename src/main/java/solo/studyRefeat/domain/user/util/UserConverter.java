@@ -30,7 +30,7 @@ public class UserConverter {
             .nickname(signUpRequest.getNickname())
             .build())
         .build();
-    user.addAuthority(Authority.ofUser(user));
+    Authority.ofUser(user);
     return user;
   }
 
@@ -46,7 +46,8 @@ public class UserConverter {
             .nickname(signUpRequest.getNickname())
             .build())
         .build();
-    user.addAuthority(Authority.ofAdmin(user));
+    Authority.ofAdmin(user);
+    Authority.ofUser(user);
     return user;
   }
 
