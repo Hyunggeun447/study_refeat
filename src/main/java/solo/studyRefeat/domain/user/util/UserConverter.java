@@ -14,6 +14,7 @@ import solo.studyRefeat.domain.user.entity.Authority;
 import solo.studyRefeat.domain.user.entity.InfoNonChanged;
 import solo.studyRefeat.domain.user.entity.Password;
 import solo.studyRefeat.domain.user.entity.User;
+import solo.studyRefeat.domain.user.entity.UserInfo;
 
 public class UserConverter {
 
@@ -25,7 +26,9 @@ public class UserConverter {
             .birth(LocalDate.parse(signUpRequest.getBirth()))
             .build())
         .password(new Password(signUpRequest.getPassword()))
-        .nickname(signUpRequest.getNickname())
+        .userInfo(UserInfo.builder()
+            .nickname(signUpRequest.getNickname())
+            .build())
         .build();
     user.addAuthority(Authority.ofUser(user));
     return user;
@@ -33,13 +36,15 @@ public class UserConverter {
 
   public static User toAdmin(SignUpRequest signUpRequest) {
     User user = User.builder()
+        .password(new Password(signUpRequest.getPassword()))
         .infoNonChanged(InfoNonChanged.builder()
             .email(signUpRequest.getEmail())
             .gender(signUpRequest.getGender())
             .birth(LocalDate.parse(signUpRequest.getBirth()))
             .build())
-        .password(new Password(signUpRequest.getPassword()))
-        .nickname(signUpRequest.getNickname())
+        .userInfo(UserInfo.builder()
+            .nickname(signUpRequest.getNickname())
+            .build())
         .build();
     user.addAuthority(Authority.ofAdmin(user));
     return user;
@@ -51,13 +56,13 @@ public class UserConverter {
       Long userComments,
       Long userCourse) {
 
-    String profileUrl = user.getProfileUrl()
+    String profileUrl = user.getUserInfo().getProfileUrl()
         .orElse(null);
 
     UserDetailResponse userDetail = UserDetailResponse.builder()
         .id(user.getId())
         .email(user.getInfoNonChanged().getEmail())
-        .nickname(user.getNickname())
+        .nickname(user.getUserInfo().getNickname())
         .profileImage(profileUrl)
         .birth(fromLocalDate(user.getInfoNonChanged().getBirth()))
         .gender(user.getInfoNonChanged().getGender())
@@ -83,13 +88,13 @@ public class UserConverter {
       Long userComments,
       Long userCourse) {
 
-    String profileUrl = user.getProfileUrl()
+    String profileUrl = user.getUserInfo().getProfileUrl()
         .orElse(null);
 
     OtherUserDetailResponse otherUserDetail = OtherUserDetailResponse.builder()
         .id(user.getId())
         .email(user.getInfoNonChanged().getEmail())
-        .nickname(user.getNickname())
+        .nickname(user.getUserInfo().getNickname())
         .profileImage(profileUrl)
         .birth(fromLocalDate(user.getInfoNonChanged().getBirth()))
         .gender(user.getInfoNonChanged().getGender())
@@ -108,7 +113,7 @@ public class UserConverter {
   }
 
   public static LoginResponse fromUserAndToken(User user, String token) {
-    String profileUrl = user.getProfileUrl()
+    String profileUrl = user.getUserInfo().getProfileUrl()
         .orElse(null);
 
     LoginResponse response = LoginResponse.builder()
@@ -117,7 +122,7 @@ public class UserConverter {
 
     LoginResponse.Datas data = response.new Datas(
         user.getId(),
-        user.getNickname(),
+        user.getUserInfo().getNickname(),
         profileUrl
     );
     response.setUser(data);

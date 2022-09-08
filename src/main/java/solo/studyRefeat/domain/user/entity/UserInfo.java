@@ -1,5 +1,6 @@
 package solo.studyRefeat.domain.user.entity;
 
+import java.util.Optional;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import lombok.AccessLevel;
@@ -27,5 +28,13 @@ public class UserInfo {
 
   public void changeProfileUrl(String newProfileUrl) {
     this.profileUrl = newProfileUrl;
+  }
+
+  public Optional<String> getProfileUrl() {
+    if(this.profileUrl == null) {
+      return Optional.empty();
+    } else {
+      return Optional.of(this.profileUrl);
+    }
   }
 }

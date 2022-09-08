@@ -88,12 +88,4 @@ public class User extends BaseTime {
   public void addAuthority(Authority authority) {
     authorities.add(authority);
   }
-
-  public Optional<String> getProfileUrl() {
-    if(this.profileUrl == null) {
-      return Optional.empty();
-    } else {
-      return Optional.of(this.profileUrl);
-    }
-  }
 }
