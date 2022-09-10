@@ -12,6 +12,7 @@ import solo.studyRefeat.domain.chat.entity.ChatMessage;
 import solo.studyRefeat.domain.chat.service.ChatMessageService;
 import solo.studyRefeat.domain.user.aop.annotation.CurrentUser;
 import solo.studyRefeat.domain.user.entity.User;
+import solo.studyRefeat.domain.user.pojo.CustomUserDetails;
 import solo.studyRefeat.domain.user.service.UserService;
 
 @Slf4j
@@ -27,7 +28,7 @@ public class ChatWebSocketController {
   public ChatMessage send(
       @DestinationVariable Long roomId,
       CreateMessageRequest request,
-      @CurrentUser User user) {
+      @CurrentUser CustomUserDetails user) {
 
     User checkedUser = userService.checkUser(user);
 

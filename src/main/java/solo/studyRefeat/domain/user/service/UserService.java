@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import solo.studyRefeat.domain.user.entity.User;
+import solo.studyRefeat.domain.user.pojo.CustomUserDetails;
 import solo.studyRefeat.domain.user.repository.UserRepository;
 
 @Transactional
@@ -13,7 +14,7 @@ public class UserService {
 
   private final UserRepository userRepository;
 
-  public User checkUser(User user) {
+  public User checkUser(CustomUserDetails user) {
     return userRepository.findById(user.getId())
         .orElseThrow(RuntimeException::new);
   }
