@@ -18,6 +18,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import solo.studyRefeat.domain.user.entity.User;
 import solo.studyRefeat.domain.user.pojo.CustomUserDetails;
 
 @Component
@@ -32,8 +33,8 @@ public class JwtTokenProvider {
     secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
   }
 
-  public String generateAccessToken(Long id, String username) {
-    return generateToken(id, username, ACCESS_TOKEN_EXPIRATION_TIME.getValue());
+  public String generateAccessToken(User user) {
+    return generateToken(user, ACCESS_TOKEN_EXPIRATION_TIME.getValue());
   }
 
   public String getUserEmail(String token) {
@@ -66,10 +67,11 @@ public class JwtTokenProvider {
     return userDetails.validate(userId,userEmail) && !isTokenExpired(token);
   }
 
-  private String generateToken(Long id ,String userEmail, Long expireTime) {
+  private String generateToken(User user, Long expireTime) {
     Claims claims = Jwts.claims();
-    claims.put("id",id);
-    claims.put("email",userEmail);
+    claims.put("id", user.getId());
+    claims.put("email",user.getInfoNonChanged().getEmail());
+    claims.put("auth", user.getAuthorities());
     Date now = new Date();
 
     return Jwts.builder()
