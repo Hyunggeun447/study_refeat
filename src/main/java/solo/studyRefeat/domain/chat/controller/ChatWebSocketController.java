@@ -1,11 +1,14 @@
 package solo.studyRefeat.domain.chat.controller;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import solo.studyRefeat.domain.chat.dto.CreateMessageRequest;
 import solo.studyRefeat.domain.chat.entity.ChatMessage;
@@ -39,4 +42,10 @@ public class ChatWebSocketController {
   public void handleException(RuntimeException e) {
     log.info(e.getMessage());
   }
+
+  @GetMapping("/{chatRoomId}")
+  public List<ChatMessage>  getChatMessageByChatRoomId(@PathVariable(name = "chatRoomId") Long chatRoomId) {
+    return chatMessageService.findChatMessageByChatRoomId(chatRoomId);
+  }
+
 }

@@ -1,5 +1,6 @@
 package solo.studyRefeat.domain.chat.service;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,5 +32,9 @@ public class ChatMessageService {
     ChatMessage chatMessage = ChatRoomConverter.toChatMessage(request, chatRoom, user);
 
     return chatMessageRepository.save(chatMessage);
+  }
+
+  public List<ChatMessage> findChatMessageByChatRoomId(Long chatRoomId) {
+    return chatMessageRepository.findByChatRoomId(chatRoomId);
   }
 }
