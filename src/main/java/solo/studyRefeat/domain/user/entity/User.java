@@ -97,11 +97,25 @@ public class User extends BaseTime {
   }
 
   public void deleteChatUser(ChatUser chatUser) {
+    if (!this.chatUsers.contains(chatUser)) {
+      throw new RuntimeException("존재하지 않는 " + chatUser + "입니다.");
+    }
     this.chatUsers.remove(chatUser);
   }
 
   public void addChatMessage(ChatMessage chatMessage) {
     this.chatMessages.add(chatMessage);
+  }
+
+  public void addBoard(Board board) {
+    this.boards.add(board);
+  }
+
+  public void deleteBoard(Board board) {
+    if (!this.boards.contains(board)) {
+      throw new RuntimeException("존재하지 않는 " + board + "입니다.");
+    }
+    this.boards.remove(board);
   }
 
   public List<String> getAuthorities() {
