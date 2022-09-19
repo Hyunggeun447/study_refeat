@@ -25,6 +25,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import solo.studyRefeat.domain.board.entity.Board;
 import solo.studyRefeat.domain.chat.entity.ChatMessage;
 import solo.studyRefeat.domain.chat.entity.ChatUser;
 import solo.studyRefeat.domain.common.entity.BaseTime;
@@ -61,6 +62,10 @@ public class User extends BaseTime {
   @Builder.Default
   @OneToMany(mappedBy = "sender")
   private List<ChatMessage> chatMessages = new ArrayList<>();
+
+  @Builder.Default
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Board> boards = new ArrayList<>();
 
   @Builder.Default
   @Column(name = "is_deleted")
