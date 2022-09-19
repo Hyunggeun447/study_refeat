@@ -65,11 +65,9 @@ public class Board {
     Assert.notNull(user, "user must be provided");
 
     boolean hasAuth = user.getAuthorities().contains("ROLE_ADMIN");
-    if (hasAuth) {
-      this.boardType = newBoardType;
-    }
+    boolean isWriter = this.user.equals(user);
 
-    if (this.user.equals(user)) {
+    if (hasAuth || isWriter) {
       this.boardType = newBoardType;
     }
   }
