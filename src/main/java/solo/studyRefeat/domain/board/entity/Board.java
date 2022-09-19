@@ -61,14 +61,37 @@ public class Board {
   private Boolean isDeleted = Boolean.FALSE;
 
   public void changeBoardType(BoardType newBoardType, User user) {
+    Assert.notNull(newBoardType, "newBoardType must be provided");
+    Assert.notNull(user, "user must be provided");
+
     boolean hasAuth = user.getAuthorities().contains("ROLE_ADMIN");
-    if (hasAuth || this.user.equals(user)) {
+    if (hasAuth) {
+      this.boardType = newBoardType;
+    }
+
+    if (this.user.equals(user)) {
       this.boardType = newBoardType;
     }
   }
 
+  public void changeTitle(String newTitle, User user) {
+    Assert.notNull(newTitle, "title must be provided");
+    Assert.notNull(user, "user must be provided");
+
+    validateWriter(user);
+    this.title = newTitle;
+  }
+
+  public void changeContent(String newContent, User user) {
+    Assert.notNull(newContent, "title must be provided");
+    Assert.notNull(user, "user must be provided");
+
+    validateWriter(user);
+    this.content = newContent;
+  }
+
   public void addUser(User user) {
-    Assert.notNull(user, "chatRoom must be provided");
+    Assert.notNull(user, "user must be provided");
 
     if (!Objects.isNull(this.user)) {
       this.user.getChatMessages().remove(this);
@@ -81,5 +104,11 @@ public class Board {
   public void deleteUser() {
     this.user.deleteBoard(this);
     this.user = null;
+  }
+
+  private void validateWriter(User user) {
+    if (this.user.equals(user)) {
+      throw new RuntimeException("권한 없음");
+    }
   }
 }
