@@ -60,6 +60,13 @@ public class Board {
   @Column(name = "is_deleted")
   private Boolean isDeleted = Boolean.FALSE;
 
+  public void changeBoardType(BoardType newBoardType, User user) {
+    boolean hasAuth = user.getAuthorities().contains("ROLE_ADMIN");
+    if (hasAuth || this.user.equals(user)) {
+      this.boardType = newBoardType;
+    }
+  }
+
   public void addUser(User user) {
     Assert.notNull(user, "chatRoom must be provided");
 
