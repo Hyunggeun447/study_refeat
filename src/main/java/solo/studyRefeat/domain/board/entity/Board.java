@@ -21,6 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.springframework.util.Assert;
@@ -59,6 +60,7 @@ public class Board {
   @ElementCollection(fetch = FetchType.EAGER)
   private List<String> imageUrls = new ArrayList<>();
 
+  @BatchSize(size = 50)
   @Builder.Default
   @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<UserLikeBoardMap> userLikeBoardMaps = new ArrayList<>();

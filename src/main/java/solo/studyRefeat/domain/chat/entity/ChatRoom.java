@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import solo.studyRefeat.domain.common.entity.BaseTime;
@@ -39,10 +40,12 @@ public class ChatRoom extends BaseTime {
   @Column(name = "roomName")
   private String roomName;
 
+  @BatchSize(size = 50)
   @Builder.Default
   @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<ChatMessage> chatMessages = new ArrayList<>();
 
+  @BatchSize(size = 200)
   @Builder.Default
   @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<ChatUser> chatUsers = new ArrayList<>();

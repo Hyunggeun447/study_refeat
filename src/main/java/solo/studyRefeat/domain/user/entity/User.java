@@ -15,7 +15,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AccessLevel;
@@ -23,6 +22,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import solo.studyRefeat.domain.board.entity.Board;
@@ -56,18 +56,23 @@ public class User extends BaseTime {
   @Embedded
   private UserInfo userInfo;
 
+  @BatchSize(size = 200)
   @Builder.Default
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<ChatUser> chatUsers = new ArrayList<>();
 
+  @BatchSize(size = 50)
   @Builder.Default
   @OneToMany(mappedBy = "sender")
   private List<ChatMessage> chatMessages = new ArrayList<>();
 
+  @BatchSize(size = 50)
   @Builder.Default
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Board> boards = new ArrayList<>();
 
+  @BatchSize(size = 50)
+  @Builder.Default
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<UserLikeBoardMap> userLikeBoardMaps = new ArrayList<>();
 
