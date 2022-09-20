@@ -3,6 +3,7 @@ package solo.studyRefeat.domain.board.entity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -22,6 +24,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.springframework.util.Assert;
+import solo.studyRefeat.domain.board.value.BoardType;
 import solo.studyRefeat.domain.user.entity.User;
 
 @Entity
@@ -55,6 +58,10 @@ public class Board {
   @Builder.Default
   @ElementCollection(fetch = FetchType.EAGER)
   private List<String> imageUrls = new ArrayList<>();
+
+  @Builder.Default
+  @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<UserLikeBoardMap> userLikeBoardMaps = new ArrayList<>();
 
   @Builder.Default
   @Column(name = "is_deleted")
@@ -102,6 +109,10 @@ public class Board {
   public void deleteUser() {
     this.user.deleteBoard(this);
     this.user = null;
+  }
+
+  public void addLikeUser(UserLikeBoardMap userMap) {
+    this.userLikeBoardMaps.add(userMap);
   }
 
   private void validateWriter(User user) {

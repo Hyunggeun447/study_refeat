@@ -26,6 +26,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import solo.studyRefeat.domain.board.entity.Board;
+import solo.studyRefeat.domain.board.entity.UserLikeBoardMap;
 import solo.studyRefeat.domain.chat.entity.ChatMessage;
 import solo.studyRefeat.domain.chat.entity.ChatUser;
 import solo.studyRefeat.domain.common.entity.BaseTime;
@@ -66,6 +67,9 @@ public class User extends BaseTime {
   @Builder.Default
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Board> boards = new ArrayList<>();
+
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<UserLikeBoardMap> userLikeBoardMaps = new ArrayList<>();
 
   @Builder.Default
   @Column(name = "is_deleted")
@@ -116,6 +120,14 @@ public class User extends BaseTime {
       throw new RuntimeException("존재하지 않는 " + board + "입니다.");
     }
     this.boards.remove(board);
+  }
+
+  public void addLikeBoard(UserLikeBoardMap boardMap) {
+    this.userLikeBoardMaps.add(boardMap);
+  }
+
+  public void likeBoard(UserLikeBoardMap boardMap) {
+    this.userLikeBoardMaps.add(boardMap);
   }
 
   public List<String> getAuthorities() {
