@@ -1,4 +1,4 @@
-package solo.studyRefeat.domain.board.entity;
+package solo.studyRefeat.domain.board.value;
 
 import lombok.RequiredArgsConstructor;
 
