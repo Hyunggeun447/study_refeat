@@ -15,7 +15,7 @@ import solo.studyRefeat.domain.common.uploadS3.UploadService;
 import solo.studyRefeat.domain.user.entity.User;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class BoardService {
 
   private final BoardRepository boardRepository;
@@ -34,6 +34,14 @@ public class BoardService {
 
     Board board = toBoard(request, imageUrls, user);
     boardRepository.save(board);
+  }
+
+  @Transactional
+  public void likeBoard(Long boardId, User user) {
+    Board board = boardRepository.findById(boardId)
+        .orElseThrow(RuntimeException::new);
+
+    board.like(user);
   }
 
 }
