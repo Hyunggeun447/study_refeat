@@ -47,6 +47,18 @@ public class BoardService {
     return board.getId();
   }
 
+  public void deleteBoard(Long boardId, User user) {
+    Board board = boardRepository.findById(boardId)
+        .orElseThrow(RuntimeException::new);
+
+    boolean hasAuth = user.getAuthorities().contains("ROLE_ADMIN");
+    boolean isWriter = board.getUser().equals(user);
+
+    if (hasAuth || isWriter) {
+      boardRepository.delete(board);
+    }
+  }
+
   public Long likeBoard(Long boardId, User user) {
     Board board = boardRepository.findById(boardId)
         .orElseThrow(RuntimeException::new);
