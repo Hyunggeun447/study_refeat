@@ -47,16 +47,23 @@ public class BoardService {
     return board.getId();
   }
 
-  public void deleteBoard(Long boardId, User user) {
+  public String deleteBoard(Long boardId, User user) {
     Board board = boardRepository.findById(boardId)
         .orElseThrow(RuntimeException::new);
 
     boolean hasAuth = user.getAuthorities().contains("ROLE_ADMIN");
-    boolean isWriter = board.getUser().equals(user);
-
-    if (hasAuth || isWriter) {
+    if (hasAuth) {
       boardRepository.delete(board);
+      return "delete" + boardId;
     }
+
+    boolean isWriter = board.getUser().equals(user);
+    if (isWriter) {
+      boardRepository.delete(board);
+      return "delete" + boardId;
+    }
+
+    throw new RuntimeException("권한 없음");
   }
 
   public Long likeBoard(Long boardId, User user) {
