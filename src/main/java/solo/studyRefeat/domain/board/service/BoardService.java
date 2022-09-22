@@ -40,4 +40,11 @@ public class BoardService {
 
     board.like(user);
   }
+
+  public void disLikeBoard(Long boardId, User user) {
+    Board board = boardRepository.findById(boardId)
+        .orElseThrow(RuntimeException::new);
+
+    board.disLike(user);
+  }
 }
