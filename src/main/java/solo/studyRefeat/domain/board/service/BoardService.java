@@ -23,6 +23,7 @@ public class BoardService {
     this.uploadService = uploadService;
   }
 
+  @Transactional
   public void createBoard(CreateBoardRequest request, List<MultipartFile> multipartFiles, User user) {
     List<String> imageUrls = multipartFiles.stream()
         .map(uploadService::uploadImg)
@@ -35,7 +36,6 @@ public class BoardService {
         .boardType(request.getBoardType())
         .imageUrls(imageUrls)
         .build();
-
 
     boardRepository.save(board);
   }
