@@ -1,5 +1,7 @@
 package solo.studyRefeat.domain.board.service;
 
+import static solo.studyRefeat.domain.board.util.BoardConverter.toBoard;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
@@ -8,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import solo.studyRefeat.domain.board.dto.CreateBoardRequest;
 import solo.studyRefeat.domain.board.entity.Board;
 import solo.studyRefeat.domain.board.repository.BoardRepository;
+import solo.studyRefeat.domain.board.util.BoardConverter;
 import solo.studyRefeat.domain.common.uploadS3.UploadService;
 import solo.studyRefeat.domain.user.entity.User;
 
@@ -29,14 +32,7 @@ public class BoardService {
         .map(uploadService::uploadImg)
         .collect(Collectors.toList());
 
-    Board board = Board.builder()
-        .title(request.getTitle())
-        .content(request.getContent())
-        .user(user)
-        .boardType(request.getBoardType())
-        .imageUrls(imageUrls)
-        .build();
-
+    Board board = toBoard(request, imageUrls, user);
     boardRepository.save(board);
   }
 
