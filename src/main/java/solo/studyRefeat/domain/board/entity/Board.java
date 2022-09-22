@@ -60,10 +60,8 @@ public class Board {
   @ElementCollection(fetch = FetchType.EAGER)
   private List<String> imageUrls = new ArrayList<>();
 
-  @BatchSize(size = 50)
-  @Builder.Default
-  @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<UserLikeBoardMap> userLikeBoardMaps = new ArrayList<>();
+  @ElementCollection(fetch = FetchType.LAZY)
+  private List<Long> likeUserId = new ArrayList<>();
 
   @Builder.Default
   @Column(name = "is_deleted")
@@ -111,10 +109,6 @@ public class Board {
   public void deleteUser() {
     this.user.deleteBoard(this);
     this.user = null;
-  }
-
-  public void addLikeUser(UserLikeBoardMap userMap) {
-    this.userLikeBoardMaps.add(userMap);
   }
 
   private void validateWriter(User user) {
