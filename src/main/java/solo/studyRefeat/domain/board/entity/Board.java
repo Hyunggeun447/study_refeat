@@ -61,7 +61,11 @@ public class Board {
   private List<String> imageUrls = new ArrayList<>();
 
   @ElementCollection(fetch = FetchType.LAZY)
+  @Builder.Default
   private List<Long> likeUserId = new ArrayList<>();
+
+  @Builder.Default
+  private Long likeCount = 0L;
 
   @Builder.Default
   @Column(name = "is_deleted")
@@ -109,6 +113,27 @@ public class Board {
   public void deleteUser() {
     this.user.deleteBoard(this);
     this.user = null;
+  }
+
+  public void like(User user) {
+    expressLike(user);
+    this.likeCount += 1;
+  }
+
+  public void disLike(User user) {
+    expressLike(user);
+    this.likeCount -= 1;
+
+  }
+
+  private void expressLike(User user) {
+    Assert.notNull(user, "user must be provided");
+
+    if (this.likeUserId.contains(user.getId())) {
+      throw new RuntimeException("이미 좋아요를 눌렀습니다.");
+    }
+
+    this.likeUserId.add(user.getId());
   }
 
   private void validateWriter(User user) {
