@@ -25,13 +25,15 @@ public class BoardService {
     this.uploadService = uploadService;
   }
 
-  public void createBoard(CreateBoardRequest request, List<MultipartFile> multipartFiles, User user) {
+  public Long createBoard(CreateBoardRequest request, List<MultipartFile> multipartFiles, User user) {
     List<String> imageUrls = multipartFiles.stream()
         .map(uploadService::uploadImg)
         .collect(Collectors.toList());
 
     Board board = toBoard(request, imageUrls, user);
-    boardRepository.save(board);
+    Board createdBoard = boardRepository.save(board);
+
+    return createdBoard.getId();
   }
 
   public void likeBoard(Long boardId, User user) {
