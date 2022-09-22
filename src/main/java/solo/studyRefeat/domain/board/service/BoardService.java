@@ -10,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 import solo.studyRefeat.domain.board.dto.CreateBoardRequest;
 import solo.studyRefeat.domain.board.entity.Board;
 import solo.studyRefeat.domain.board.repository.BoardRepository;
-import solo.studyRefeat.domain.board.util.BoardConverter;
 import solo.studyRefeat.domain.common.uploadS3.UploadService;
 import solo.studyRefeat.domain.user.entity.User;
 
@@ -26,7 +25,6 @@ public class BoardService {
     this.uploadService = uploadService;
   }
 
-  @Transactional
   public void createBoard(CreateBoardRequest request, List<MultipartFile> multipartFiles, User user) {
     List<String> imageUrls = multipartFiles.stream()
         .map(uploadService::uploadImg)
@@ -36,12 +34,10 @@ public class BoardService {
     boardRepository.save(board);
   }
 
-  @Transactional
   public void likeBoard(Long boardId, User user) {
     Board board = boardRepository.findById(boardId)
         .orElseThrow(RuntimeException::new);
 
     board.like(user);
   }
-
 }
