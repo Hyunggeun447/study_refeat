@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import solo.studyRefeat.domain.common.exception.S3UploadException;
 
 @Service
 @Transactional
@@ -45,7 +44,7 @@ public class UploadServiceImpl implements UploadService {
     try {
       image = ImageIO.read(multipartFile.getInputStream());
     } catch (IOException e) {
-      throw new S3UploadException();
+      throw new RuntimeException("Amazon S3에 업로드하는 과정에서 문제가 발생했습니다.");
     }
     return uploadImgToS3(image, saveFileName, ext);
   }
