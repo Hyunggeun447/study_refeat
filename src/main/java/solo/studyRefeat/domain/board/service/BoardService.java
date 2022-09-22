@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import solo.studyRefeat.domain.board.dto.ChangeBoardRequest;
 import solo.studyRefeat.domain.board.dto.CreateBoardRequest;
 import solo.studyRefeat.domain.board.entity.Board;
 import solo.studyRefeat.domain.board.repository.BoardRepository;
@@ -34,6 +35,16 @@ public class BoardService {
     Board createdBoard = boardRepository.save(board);
 
     return createdBoard.getId();
+  }
+
+  public Long changeBoard(Long boardId, ChangeBoardRequest request, User user) {
+    Board board = boardRepository.findById(boardId)
+        .orElseThrow(RuntimeException::new);
+
+    board.changeTitle(request.getTitle(), user);
+    board.changeContent(request.getContent(), user);
+    board.changeBoardType(request.getBoardType(), user);
+    return board.getId();
   }
 
   public Long likeBoard(Long boardId, User user) {
