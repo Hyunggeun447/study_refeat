@@ -36,17 +36,19 @@ public class BoardService {
     return createdBoard.getId();
   }
 
-  public void likeBoard(Long boardId, User user) {
+  public Long likeBoard(Long boardId, User user) {
     Board board = boardRepository.findById(boardId)
         .orElseThrow(RuntimeException::new);
 
     board.like(user);
+    return board.getLikeCount();
   }
 
-  public void disLikeBoard(Long boardId, User user) {
+  public Long disLikeBoard(Long boardId, User user) {
     Board board = boardRepository.findById(boardId)
         .orElseThrow(RuntimeException::new);
 
     board.disLike(user);
+    return board.getLikeCount();
   }
 }
