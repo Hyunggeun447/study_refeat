@@ -1,6 +1,9 @@
 package solo.studyRefeat.domain.board.controller;
 
 import java.util.List;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,5 +54,12 @@ public class BoardController {
     Board board = boardSearchService.findById(boardId);
 
     return ResponseEntity.ok(board);
+  }
+
+  @GetMapping()
+  public ResponseEntity<Slice<Board>> getAll(
+      @PageableDefault(page = 0, size = 15) Pageable pageable) {
+    Slice<Board> boards = boardSearchService.findAll(pageable);
+    return ResponseEntity.ok(boards);
   }
 }
