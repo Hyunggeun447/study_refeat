@@ -37,13 +37,20 @@ public class BoardService {
     return createdBoard.getId();
   }
 
-  public Long changeBoard(Long boardId, ChangeBoardRequest request, User user) {
+  public Long changeBoard(Long boardId, ChangeBoardRequest request,
+      List<MultipartFile> multipartFiles, User user) {
+
     Board board = boardRepository.findById(boardId)
         .orElseThrow(RuntimeException::new);
+
+    List<String> imageUrls = multipartFiles.stream()
+        .map(uploadService::uploadImg)
+        .collect(Collectors.toList());
 
     board.changeTitle(request.getTitle(), user);
     board.changeContent(request.getContent(), user);
     board.changeBoardType(request.getBoardType(), user);
+    board.changeImageUrl(imageUrls, user);
     return board.getId();
   }
 
