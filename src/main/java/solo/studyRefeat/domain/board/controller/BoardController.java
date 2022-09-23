@@ -6,6 +6,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,7 +53,7 @@ public class BoardController {
   }
 
   @PutMapping("/{boardId}")
-  public void chageBoard(
+  public ResponseEntity<Long> changeBoard(
       @PathVariable("boardId") Long boardId,
       @RequestPart("request") ChangeBoardRequest request,
       @RequestPart("images") List<MultipartFile> images,
@@ -60,8 +61,12 @@ public class BoardController {
 
     User user = userService.checkUser(userDetails);
 
-    boardService.changeBoard(boardId, request, images, user);
+    Long id = boardService.changeBoard(boardId, request, images, user);
+    return ResponseEntity.ok(id);
   }
+
+//  @DeleteMapping("/{boardId")
+//  public void
 
   @GetMapping("/{boardId}")
   public ResponseEntity<Board> getBoard(@PathVariable("boardId") Long boardId) {
