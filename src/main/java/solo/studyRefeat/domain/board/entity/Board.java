@@ -96,6 +96,13 @@ public class Board {
     this.content = newContent;
   }
 
+  public void changeImageUrl(List<String> newImageUrls, User user) {
+    Assert.notNull(user, "user must be provided");
+
+    validateWriter(user);
+    this.imageUrls = newImageUrls;
+  }
+
   public void addUser(User user) {
     Assert.notNull(user, "user must be provided");
 
