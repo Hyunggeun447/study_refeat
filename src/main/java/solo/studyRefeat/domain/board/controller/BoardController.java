@@ -3,6 +3,8 @@ package solo.studyRefeat.domain.board.controller;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import solo.studyRefeat.domain.board.dto.CreateBoardRequest;
+import solo.studyRefeat.domain.board.entity.Board;
+import solo.studyRefeat.domain.board.service.BoardSearchService;
 import solo.studyRefeat.domain.board.service.BoardService;
 import solo.studyRefeat.domain.user.aop.annotation.CurrentUser;
 import solo.studyRefeat.domain.user.entity.User;
@@ -22,11 +26,14 @@ public class BoardController {
 
   private final BoardService boardService;
   private final UserService userService;
+  private final BoardSearchService boardSearchService;
 
   public BoardController(BoardService boardService,
-      UserService userService) {
+      UserService userService,
+      BoardSearchService boardSearchService) {
     this.boardService = boardService;
     this.userService = userService;
+    this.boardSearchService = boardSearchService;
   }
 
   @PostMapping()
@@ -37,5 +44,12 @@ public class BoardController {
     User user = userService.checkUser(userDetails);
     Long boardId = boardService.createBoard(request, images, user);
     return ResponseEntity.ok(boardId);
+  }
+
+  @GetMapping("/{boardId}")
+  public ResponseEntity<Board> getBoard(@PathVariable("boardId") Long boardId) {
+    Board board = boardSearchService.findById(boardId);
+
+    return ResponseEntity.ok(board);
   }
 }
