@@ -3,6 +3,7 @@ package solo.studyRefeat.domain.chat.controller;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,9 +21,10 @@ public class SearchChatRoomController {
   private final UserService userService;
 
   @GetMapping
-  public List<ChatRoom> getChatRoom(
+  public ResponseEntity<List<ChatRoom>> getChatRoom(
       @RequestParam("roomName") Optional<String> roomName) {
 
-    return chatRoomService.findChatRoomByRoomName(roomName);
+    List<ChatRoom> chatRooms = chatRoomService.findChatRoomByRoomName(roomName);
+    return ResponseEntity.ok(chatRooms);
   }
 }

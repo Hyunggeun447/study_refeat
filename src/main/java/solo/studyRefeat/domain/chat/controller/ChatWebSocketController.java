@@ -3,6 +3,7 @@ package solo.studyRefeat.domain.chat.controller;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -28,14 +29,15 @@ public class ChatWebSocketController {
 
   @MessageMapping("/room/{roomId}")
   @SendTo("/chat/room/{roomId}")
-  public ChatMessage send(
+  public ResponseEntity<ChatMessage> send(
       @DestinationVariable Long roomId,
       CreateMessageRequest request,
       @CurrentUser CustomUserDetails user) {
 
     User checkedUser = userService.checkUser(user);
 
-    return chatMessageService.createMessage(roomId, request, checkedUser);
+    ChatMessage message = chatMessageService.createMessage(roomId, request, checkedUser);
+    return ResponseEntity.ok(message);
   }
 
   @MessageExceptionHandler(RuntimeException.class)
@@ -44,8 +46,9 @@ public class ChatWebSocketController {
   }
 
   @GetMapping("/{chatRoomId}")
-  public List<ChatMessage>  getChatMessageByChatRoomId(@PathVariable(name = "chatRoomId") Long chatRoomId) {
-    return chatMessageService.findChatMessageByChatRoomId(chatRoomId);
+  public ResponseEntity<List<ChatMessage>>  getChatMessageByChatRoomId(@PathVariable(name = "chatRoomId") Long chatRoomId) {
+    List<ChatMessage> chatMessages = chatMessageService.findChatMessageByChatRoomId(
+        chatRoomId);
+    return ResponseEntity.ok(chatMessages);
   }
-
 }

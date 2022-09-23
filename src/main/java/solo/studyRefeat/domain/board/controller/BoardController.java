@@ -1,6 +1,7 @@
 package solo.studyRefeat.domain.board.controller;
 
 import java.util.List;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,12 +30,12 @@ public class BoardController {
   }
 
   @PostMapping()
-  public Long createBoard(
+  public ResponseEntity<Long> createBoard(
       @RequestPart("request") CreateBoardRequest request,
       @RequestPart("images") List<MultipartFile> images,
       @CurrentUser CustomUserDetails userDetails) {
     User user = userService.checkUser(userDetails);
     Long boardId = boardService.createBoard(request, images, user);
-    return boardId;
+    return ResponseEntity.ok(boardId);
   }
 }

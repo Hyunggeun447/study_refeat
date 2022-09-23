@@ -1,6 +1,7 @@
 package solo.studyRefeat.domain.user.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,8 +20,8 @@ public class MailController {
    * 인증코드를 return받에 presentation 계층에서 코드의 정합성을 비교한다.
    */
   @PostMapping("/login/mailConfim")
-  public String mailConfirm(@RequestParam("email") String email) throws Exception {
+  public ResponseEntity<String> mailConfirm(@RequestParam("email") String email) throws Exception {
     String code = mailService.sendSimpleMessage(email);
-    return code;
+    return ResponseEntity.ok(code);
   }
 }
