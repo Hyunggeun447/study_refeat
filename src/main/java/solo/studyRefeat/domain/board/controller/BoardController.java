@@ -5,13 +5,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -88,4 +86,25 @@ public class BoardController {
     Slice<Board> boards = boardSearchService.findAll(pageable);
     return ResponseEntity.ok(boards);
   }
+
+  @PutMapping("/like/{boardId}")
+  public ResponseEntity<Long> likeBoard(
+      @PathVariable("boardId") Long boardId,
+      @CurrentUser CustomUserDetails userDetails
+  ) {
+    User user = userService.checkUser(userDetails);
+    boardService.likeBoard(boardId, user);
+    return ResponseEntity.ok(boardId);
+  }
+
+  @PutMapping("/dislike/{boardId}")
+  public ResponseEntity<Long> dislikeBoard(
+      @PathVariable("boardId") Long boardId,
+      @CurrentUser CustomUserDetails userDetails
+  ) {
+    User user = userService.checkUser(userDetails);
+    boardService.disLikeBoard(boardId, user);
+    return ResponseEntity.ok(boardId);
+  }
+
 }
