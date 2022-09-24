@@ -34,7 +34,7 @@ public class ChatWebSocketController {
       CreateMessageRequest request,
       @CurrentUser CustomUserDetails user) {
 
-    User checkedUser = userService.checkUser(user);
+    User checkedUser = userService.getUser(user);
 
     ChatMessage message = chatMessageService.createMessage(roomId, request, checkedUser);
     return ResponseEntity.ok(message);

@@ -45,7 +45,7 @@ public class BoardController {
       @RequestPart("request") CreateBoardRequest request,
       @RequestPart("images") List<MultipartFile> images,
       @CurrentUser CustomUserDetails userDetails) {
-    User user = userService.checkUser(userDetails);
+    User user = userService.getUser(userDetails);
     Long boardId = boardService.createBoard(request, images, user);
     return ResponseEntity.ok(boardId);
   }
@@ -57,7 +57,7 @@ public class BoardController {
       @RequestPart("images") List<MultipartFile> images,
       @CurrentUser CustomUserDetails userDetails) {
 
-    User user = userService.checkUser(userDetails);
+    User user = userService.getUser(userDetails);
 
     Long id = boardService.changeBoard(boardId, request, images, user);
     return ResponseEntity.ok(id);
@@ -68,7 +68,7 @@ public class BoardController {
       @PathVariable("boardId") Long boardId,
       @CurrentUser CustomUserDetails userDetails
   ) {
-    User user = userService.checkUser(userDetails);
+    User user = userService.getUser(userDetails);
     boardService.deleteBoard(boardId, user);
     return ResponseEntity.noContent().build();
   }
@@ -92,7 +92,7 @@ public class BoardController {
       @PathVariable("boardId") Long boardId,
       @CurrentUser CustomUserDetails userDetails
   ) {
-    User user = userService.checkUser(userDetails);
+    User user = userService.getUser(userDetails);
     boardService.likeBoard(boardId, user);
     return ResponseEntity.ok(boardId);
   }
@@ -102,7 +102,7 @@ public class BoardController {
       @PathVariable("boardId") Long boardId,
       @CurrentUser CustomUserDetails userDetails
   ) {
-    User user = userService.checkUser(userDetails);
+    User user = userService.getUser(userDetails);
     boardService.disLikeBoard(boardId, user);
     return ResponseEntity.ok(boardId);
   }

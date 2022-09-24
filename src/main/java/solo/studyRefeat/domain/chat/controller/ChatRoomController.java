@@ -30,7 +30,7 @@ public class ChatRoomController {
       @RequestBody CreateChatRoomRequest request,
       @CurrentUser CustomUserDetails user) {
 
-    User checkedUser = userService.checkUser(user);
+    User checkedUser = userService.getUser(user);
     Long chatRoomId = chatRoomService.createChatRoom(request, checkedUser);
     return ResponseEntity.ok(chatRoomId);
   }
@@ -40,7 +40,7 @@ public class ChatRoomController {
       @RequestBody AddChatUserRequest request,
       @CurrentUser CustomUserDetails user) {
 
-    userService.checkUser(user);
+    userService.getUser(user);
     Long chatRoomId = chatRoomService.addChatUser(request);
     return ResponseEntity.ok(chatRoomId);
   }
@@ -49,7 +49,7 @@ public class ChatRoomController {
   public ResponseEntity deleteUser(
       @RequestBody DeleteChatUserRequest request,
       @CurrentUser CustomUserDetails user) {
-    User checkedUser = userService.checkUser(user);
+    User checkedUser = userService.getUser(user);
     chatRoomService.deleteChatUser(request, checkedUser);
     return ResponseEntity.noContent().build();
   }

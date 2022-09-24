@@ -14,7 +14,7 @@ public class UserService {
 
   private final UserRepository userRepository;
 
-  public User checkUser(CustomUserDetails user) {
+  public User getUser(CustomUserDetails user) {
     return userRepository.findById(user.getId())
         .orElseThrow(RuntimeException::new);
   }
