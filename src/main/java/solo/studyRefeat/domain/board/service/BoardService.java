@@ -85,7 +85,7 @@ public class BoardService {
     Board board = boardRepository.findById(boardId)
         .orElseThrow(RuntimeException::new);
 
-    board.disLike(user);
+    board.dislike(user);
     return board.getLikeCount();
   }
 }

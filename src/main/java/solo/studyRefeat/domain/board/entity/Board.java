@@ -120,17 +120,17 @@ public class Board {
   }
 
   public void like(User user) {
-    expressLike(user);
+    checkRecordForLikeAndDislike(user);
     this.likeCount += 1;
   }
 
-  public void disLike(User user) {
-    expressLike(user);
+  public void dislike(User user) {
+    checkRecordForLikeAndDislike(user);
     this.likeCount -= 1;
 
   }
 
-  private void expressLike(User user) {
+  private void checkRecordForLikeAndDislike(User user) {
     Assert.notNull(user, "user must be provided");
 
     if (this.likeUserId.contains(user.getId())) {
