@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -24,7 +25,10 @@ import solo.studyRefeat.domain.common.entity.BaseTime;
 import solo.studyRefeat.domain.user.entity.User;
 
 @Entity
-@Table(name = "chat_room")
+@Table(name = "chat_room", indexes = {
+    @Index(name = "idx_room_name", columnList = "roomName"),
+    @Index(name = "idx_host_id", columnList = "hostId")
+})
 @Where(clause = "is_deleted = false")
 @SQLDelete(sql = "UPDATE chat_room SET is_deleted = true WHERE id = ?")
 @Getter
